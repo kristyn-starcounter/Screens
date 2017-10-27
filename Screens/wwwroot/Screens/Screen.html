@@ -1,0 +1,76 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/puppet-redirect/puppet-redirect.html">
+<link rel="import" href="/sys/juicy-select/juicy-select.html" />
+
+
+
+<template>
+    <template is="dom-bind">
+        
+        <div style="margin:40px">
+
+            <div>
+                <h1>Screen</h1>
+            </div>
+
+            <input type="text" value="{{model.Name$::input}}" placeholder="Name" />
+            <p>
+                <i>Name</i>
+            </p>
+
+
+
+            <!--<select  value="{{model.SelectedTimeZoneId$::change}}">
+            <template is="dom-repeat" items="{{model.TimeZones}}">
+                <option value="{{item.Id}}">{{item.DisplayName}}</option>
+            </template>
+        </select>-->
+
+            <juicy-select caption-text="" value="{{model.SelectedTimeZoneId$}}" options="{{model.TimeZones}}" text-property="DisplayName" value-property="Id"></juicy-select>
+
+            <!--<div slot="kitchensink/dropdown-objects-select-label">
+            <template is="dom-if" if="{{model.SelectedProduct.Name}}">
+                <p class="kitchensink-test-juicy-select-label">You have selected: <strong>{{model.SelectedProduct.Name}}</strong></p>
+            </template>
+        </div>-->
+
+
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="{{model.DaylightSavings$::change}}" placeholder="Private">DaylightSavings
+                </label>
+
+            </div>
+
+
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Expires</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="{{model.ScreenCodes}}">
+                        <tr>
+                            <td>{{item.Code}}</td>
+                            <td>{{item.Expires}}</td>
+                            <td><button type="button" value="{{item.DeleteTrigger$::click}}" class="btn btn-sm btn-danger" onclick="++this.value">Delete</button></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <button type="button" value="{{model.GenerateScreenCodeTrigger$::click}}" class="btn btn-sm btn-default" onclick="++this.value">Generate new Screen Code</button>
+
+            <starcounter-include partial="{{model.PluginsContent}}"></starcounter-include>
+
+            <button type="button" value="{{model.SaveTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">Save</button>
+            <button type="button" value="{{model.CloseTrigger$::click}}" class="btn btn-sm btn-default" onclick="++this.value">Close</button>
+
+            <link is="puppet-redirect" history url$="{{model.RedirectUrl}}" />
+            </div>
+</template>
+</template>

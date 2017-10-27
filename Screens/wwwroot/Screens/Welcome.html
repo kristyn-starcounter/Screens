@@ -1,0 +1,28 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/puppet-redirect/puppet-redirect.html">
+
+
+<template>
+
+    <template is="dom-bind">
+        <div style="margin:40px">
+
+            <h1>Welcome!!</h1>
+
+            <br />
+            <br />
+
+            <input type="text" value="{{model.ScreenCode$::input}}" placeholder="Screen Code" />
+            <p>
+                <i>Connect this screen using a screencode</i>
+            </p>
+
+            <button type="button" value="{{model.ConnectScreenTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">ConnectScreen</button>
+
+            <link is="puppet-redirect" history url$="{{model.RedirectUrl}}" />
+
+        </div>
+
+    </template>
+
+</template>

@@ -1,0 +1,25 @@
+{
+  "Html": "/Screens/screen.html",
+  "RedirectUrl": "",
+  "Name$": "",
+  "PluginsContent": {},
+  "TimeZones": [
+    {
+      "Id": "",
+      "DisplayName": ""
+    }
+  ],
+  "SelectedTimeZoneId$": "",
+  "DaylightSavings$": false,
+  "ScreenCodes": [
+    {
+      "Code": "",
+      "Expires": "",
+      "DeleteTrigger$": 0
+    }
+  ],
+  "GenerateScreenCodeTrigger$": 0,
+  "SaveTrigger$": 0,
+  "CloseTrigger$": 0
+
+}

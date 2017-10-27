@@ -1,0 +1,12 @@
+{
+  "Html": "/Screens/Screens.html",
+  "Screens": [
+    {
+      "Name": "",
+      "TimeZone": "",
+      "DaylightSavings": false,
+      "Url": "",
+      "DeleteTrigger$": 0
+    }
+  ]
+}
