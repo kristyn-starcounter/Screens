@@ -51,13 +51,13 @@ namespace Screens
                 if (mainPage.Cookie != null)
                 {
                     // Try find screen
-                    Screen screen = Db.SQL<Screen>("SELECT o FROM Screens.Common.Screen o WHERE o.CookieValue = ?", mainPage.Cookie.Value).First;
+                    Screen screen = Db.SQL<Screen>("SELECT o FROM Screens.Common.Screen o WHERE o.CookieValue = ?", mainPage.Cookie.Value).FirstOrDefault();
                     if (screen != null)
                     {
                         Db.Transact(() => { screen.LastAccess = DateTime.UtcNow; });
                         mainPage.HideMenu = true;
 
-                        ScreenContentPage screenContentPage = new ScreenContentPage();
+                        ScreenContentPage screenContentPage = new ScreenContentPage() { Data = screen };
                         screenContentPage.Init(screen);
                         mainPage.Content = screenContentPage;
 
@@ -120,7 +120,7 @@ namespace Screens
                     return mainPage;
                 }
 
-                Screen screen = Db.SQL<Screen>("SELECT o FROM Screens.Common.Screen o WHERE o.ObjectID=?", id).First;
+                Screen screen = Db.SQL<Screen>("SELECT o FROM Screens.Common.Screen o WHERE o.ObjectID=?", id).FirstOrDefault();
                 if (screen == null)
                 {
                     ErrorMessageBox.Show("Screen not found"); // TODO: Show page error instead of popup
@@ -169,6 +169,23 @@ namespace Screens
 
             #endregion
 
+
+            #region MenuItems
+
+            Handle.GET("/Screens/menuitem/{?}", (string screenId) =>
+            {
+
+                MenuItem menuItem = new MenuItem();
+                menuItem.Name = "Screen";
+
+
+                return menuItem;
+            });
+
+            Blender.MapUri("/Screens/menuitem/{?}", "menuitem");
+
+
+            #endregion
 
             #region Mapping
 

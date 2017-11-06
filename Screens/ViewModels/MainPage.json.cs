@@ -2,6 +2,7 @@ using Starcounter;
 using Starcounter.Templates;
 using System;
 using Screens.Common;
+using System.Linq;
 
 namespace Screens.ViewModels
 {
@@ -32,7 +33,7 @@ namespace Screens.ViewModels
             {
                 // google user signed in
 
-                User user = Db.SQL<User>("SELECT o FROM Screens.Common.User o WHERE o.GoogleId = ?", this.Id).First;
+                User user = Db.SQL<User>("SELECT o FROM Screens.Common.User o WHERE o.GoogleId = ?", this.Id).FirstOrDefault();
 
                 if (user == null)
                 {
@@ -70,7 +71,7 @@ namespace Screens.ViewModels
                     });
                 }
 
-//                mainPage.User.Data = user;
+                //                mainPage.User.Data = user;
 
                 UserSession.SignInUser(user);
 

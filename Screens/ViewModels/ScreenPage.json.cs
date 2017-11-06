@@ -11,10 +11,10 @@ namespace Screens.ViewModels
         protected override void OnData()
         {
             base.OnData();
-            if (this.Data != null)
-            {
-                this.SelectedTimeZoneId = this.Data.TimeZoneId;
-            }
+            //if (this.Data != null)
+            //{
+            //    this.SelectedTimeZoneId = this.Data.TimeZoneId;
+            //}
         }
 
         public void Init()
@@ -22,25 +22,25 @@ namespace Screens.ViewModels
             this.PluginsContent = Self.GET("/Screens/screenpluginmapping/"+this.Data.GetObjectID());
         }
 
-        public QueryResultRows<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>("SELECT o FROM Screens.Common.ScreenTempCode o WHERE o.Screen = ? ORDER BY o.Expires", this.Data);
+        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>("SELECT o FROM Screens.Common.ScreenTempCode o WHERE o.Screen = ? ORDER BY o.Expires", this.Data);
 
 
-        public IEnumerable<TimeZoneInfo> TimeZones => TimeZoneInfo.GetSystemTimeZones();
+        //public IEnumerable<TimeZoneInfo> TimeZones => TimeZoneInfo.GetSystemTimeZones();
 
-        public string SelectedTimeZoneId {
-            get {
+        //public string SelectedTimeZoneId {
+        //    get {
 
-                if (this.Data == null || string.IsNullOrEmpty(this.Data.TimeZoneId))
-                {
-                    return TimeZoneInfo.Local.Id;
-                }
+        //        if (this.Data == null || string.IsNullOrEmpty(this.Data.TimeZoneId))
+        //        {
+        //            return TimeZoneInfo.Local.Id;
+        //        }
 
-                return this.Data.TimeZoneId;
-            }
-            set {
-                this.Data.TimeZoneId = value;
-            }
-        }
+        //        return this.Data.TimeZoneId;
+        //    }
+        //    set {
+        //        this.Data.TimeZoneId = value;
+        //    }
+        //}
          
 
         public string UrlString {
@@ -71,6 +71,26 @@ namespace Screens.ViewModels
         {
             this.Transaction.Rollback();
             this.RedirectUrl = "/Screens/screens";
+        }
+
+
+        public void Handle(Input.DeleteTrigger action)
+        {
+
+            MessageBoxButton deleteButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Yes, Text = "Delete", CssClass = "btn btn-sm btn-danger" };
+            MessageBoxButton cancelButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Cancel, Text = "Cancel" };
+
+            MessageBox.Show("Remove Screen", "This Screen will be removed.", cancelButton, deleteButton, (result) =>
+            {
+
+                if (result == MessageBox.MessageBoxResult.Yes)
+                {
+                    Db.Transact(() =>
+                    {
+                        this.Data.Delete();
+                    });
+                }
+            });
         }
 
         public string GenerateRandomScreenCode()

@@ -3,10 +3,8 @@
   "Screens": [
     {
       "Name": "",
-      "TimeZone": "",
-      "DaylightSavings": false,
-      "Url": "",
-      "DeleteTrigger$": 0
+      "Description": "",
+      "Url": ""
     }
   ]
 }
