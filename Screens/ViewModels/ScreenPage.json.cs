@@ -63,8 +63,24 @@ namespace Screens.ViewModels
 
         public void Handle(Input.SaveTrigger action)
         {
+            //Screen screen = this.Data;
+            //MainPage mainPage = Program.GetMainPage();
+            //ScreenContentPage screenContentPage = new ScreenContentPage() { Data = screen };
+            //screenContentPage.Init(screen);
+            //mainPage.Content = screenContentPage;
+
+            //            this.Content = Self.GET("/Screens/screenContent/" + this.Data.GetObjectID());
+
+
+
             this.Transaction.Commit();
             this.RedirectUrl = "/Screens/screens";
+
+            Session.ForAll((s, sessionId) =>
+            {
+                s.CalculatePatchAndPushOnWebSocket();
+            });
+
         }
 
         public void Handle(Input.CloseTrigger action)

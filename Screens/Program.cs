@@ -57,6 +57,7 @@ namespace Screens
                         Db.Transact(() => { screen.LastAccess = DateTime.UtcNow; });
                         mainPage.HideMenu = true;
 
+
                         ScreenContentPage screenContentPage = new ScreenContentPage() { Data = screen };
                         screenContentPage.Init(screen);
                         mainPage.Content = screenContentPage;
@@ -200,39 +201,11 @@ namespace Screens
             Handle.GET("/Screens/screenpluginmapping/{?}", (string screenId) =>
             {
                 return new Json();
-                //Screen screen = Db.FromId(screenId) as Screen;
-                //TestPage testPage = new TestPage();
-                //testPage.Message = "Screens does not have any content from screens app";
-                //return testPage;
             });
 
             Blender.MapUri("/Screens/screenpluginmapping/{?}", "screen");
 
-
-
-            //Handle.GET("/Screens/screencontentmapping/{?}", (string id) =>
-            //{
-
-            //    if (id == "room")
-            //    {
-            //        //MainPage mainPage = new MainPage();
-            //        Room room = Program.GetRoom();
-            //        MainContentPage mainContentPage = new MainContentPage();
-            //        mainContentPage.Init(room, room.TimeZoneInfo); // TODO: Fix args
-            //        return mainContentPage;
-
-            //        //return mainPage;
-            //    }
-            //    return new Json();
-
-
-            //});
-
-            //Blender.MapUri("/Screens/screencontentmapping/{?}", "screencontent");
-
             #endregion
-
-
 
 
 
