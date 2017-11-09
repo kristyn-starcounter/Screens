@@ -35,11 +35,17 @@ namespace Screens
 
                 string guid = collection["setcookie"];
 
-                Handle.AddOutgoingCookie("screenid", guid);
+                //Handle.AddOutgoingCookie("screenid", guid);   // This only set a "session" cookie
 
                 MainPage mainPage = GetMainPage();
                 mainPage.RedirectUrl = "/Screens";
-                return mainPage;
+                Response respone = new Response();
+                respone.Resource = mainPage;
+                respone.Headers["Set-Cookie"] = "screenid=" + guid + "; Expires = Wed, 2 Dec 2037 00:00:00 GMT;"; // TODO: Come up with a more clever way to set a cookie with no expire date
+                //respone.Headers["Location"] = "/Screens";
+                //respone.StatusCode = (ushort)System.Net.HttpStatusCode.MovedPermanently;
+                return respone;
+
             });
 
             Handle.GET("/Screens", (Request request) =>
@@ -56,13 +62,9 @@ namespace Screens
                     {
                         Db.Transact(() => { screen.LastAccess = DateTime.UtcNow; });
                         mainPage.HideMenu = true;
-
-
                         ScreenContentPage screenContentPage = new ScreenContentPage() { Data = screen };
                         screenContentPage.Init(screen);
                         mainPage.Content = screenContentPage;
-
-//                        mainPage.Content = Self.GET("/Screens/screenContent/" + screen.GetObjectID());
                         return mainPage;
                     }
                 }

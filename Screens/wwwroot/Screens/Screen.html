@@ -7,7 +7,7 @@
 <template>
     <template is="dom-bind">
 
-        <div class="formpanel" >
+        <div class="formpanel">
 
             <div>
                 <h1>Screen</h1>
@@ -15,35 +15,36 @@
 
 
             <div class="form-group">
-                <label for="name">Screen Name</label>
+<!--                <label for="name">Screen Name</label>-->
                 <input type="text" class="form-control" id="name" value="{{model.Name$::input}}" placeholder="Enter name">
                 <small class="form-text text-muted">Name your screen.</small>
             </div>
-       
+
 
             <div class="form-group">
-                <label for="description">Description</label>
+    <!--            <label for="description">Description</label>-->
                 <input type="text" class="form-control" id="description" value="{{model.Description$::input}}" placeholder="Enter Description">
                 <small class="form-text text-muted">Description of the screen.</small>
             </div>
 
-
-            <template is="dom-repeat" items="{{model.ScreenCodes}}">
-                <div class="screenCodeItem" >
-                    <label>Screen code</label>
-                    <h2>{{item.Code}}</h2>
-                    <label>Expires</label>
-                    <p>{{item.Expires}}</p>
-                    <div class="pull-right">
-                        <button type="button" value="{{item.DeleteTrigger$::click}}" class="btn btn-sm btn-danger" onclick="++this.value">Delete</button>
+            <div class="form-group">
+                <template is="dom-repeat" items="{{model.ScreenCodes}}">
+                    <div class="screenCodeItem">
+                        <label>Screen code</label>
+                        <h2>{{item.Code}}</h2>
+                        <label>Expires</label>
+                        <p>{{item.Expires}}</p>
+                        <div class="pull-right">
+                            <button type="button" value="{{item.DeleteTrigger$::click}}" class="btn btn-sm btn-danger" onclick="++this.value">Delete</button>
+                        </div>
                     </div>
-                </div>
-            </template>
+                </template>
+            </div>
 
-            <button type="button" value="{{model.GenerateScreenCodeTrigger$::click}}" style="vertical-align:bottom" class="btn btn-sm btn-default" onclick="++this.value">Generate Screen Code</button>
-
- 
-
+            <div class="form-group">
+                <p><small class="form-text text-muted">The genereated screen code is used to connect a physical screen to this instance.</small></p>
+                <button type="button" value="{{model.GenerateScreenCodeTrigger$::click}}" class="btn btn-sm btn-default" onclick="++this.value">Generate Screen Code</button>
+            </div>
 
             <starcounter-include partial="{{model.PluginsContent}}"></starcounter-include>
 

@@ -1,23 +1,13 @@
 {
-  "short_name": "AirHorner",
-  "name": "Kinlan's AirHorner of Infamy",
+  "short_name": "Screens",
+  "name": "Connecting Screens",
   "display": "fullscreen",
   "icons": [
     {
-      "src": "launcher-icon-1x.png",
+      "src": "/screens.png",
       "type": "image/png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "launcher-icon-2x.png",
-      "type": "image/png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "launcher-icon-4x.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "512x512"
     }
   ],
-  "start_url": "index.html?launcher=true"
+  "start_url": "/screens"
 }

@@ -7,51 +7,17 @@ namespace Screens.ViewModels
 {
     partial class ScreenPage : Json, IBound<Screen>
     {
-
-        protected override void OnData()
-        {
-            base.OnData();
-            //if (this.Data != null)
-            //{
-            //    this.SelectedTimeZoneId = this.Data.TimeZoneId;
-            //}
-        }
-
         public void Init()
         {
-            this.PluginsContent = Self.GET("/Screens/screenpluginmapping/"+this.Data.GetObjectID());
+            this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data.GetObjectID());
         }
 
         public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>("SELECT o FROM Screens.Common.ScreenTempCode o WHERE o.Screen = ? ORDER BY o.Expires", this.Data);
-
-
-        //public IEnumerable<TimeZoneInfo> TimeZones => TimeZoneInfo.GetSystemTimeZones();
-
-        //public string SelectedTimeZoneId {
-        //    get {
-
-        //        if (this.Data == null || string.IsNullOrEmpty(this.Data.TimeZoneId))
-        //        {
-        //            return TimeZoneInfo.Local.Id;
-        //        }
-
-        //        return this.Data.TimeZoneId;
-        //    }
-        //    set {
-        //        this.Data.TimeZoneId = value;
-        //    }
-        //}
-         
-
-        public string UrlString {
-            get {
-                return string.Format("/Screens/screens/{0}", this.Data?.GetObjectID());
-            }
-        }
-
+        
+        public string UrlString => string.Format("/Screens/screens/{0}", this.Data?.GetObjectID());
+    
         public void Handle(Input.GenerateScreenCodeTrigger action)
         {
-
             Db.Transact(() =>
             {
                 ScreenTempCode screenCode = new ScreenTempCode();
@@ -63,24 +29,8 @@ namespace Screens.ViewModels
 
         public void Handle(Input.SaveTrigger action)
         {
-            //Screen screen = this.Data;
-            //MainPage mainPage = Program.GetMainPage();
-            //ScreenContentPage screenContentPage = new ScreenContentPage() { Data = screen };
-            //screenContentPage.Init(screen);
-            //mainPage.Content = screenContentPage;
-
-            //            this.Content = Self.GET("/Screens/screenContent/" + this.Data.GetObjectID());
-
-
-
             this.Transaction.Commit();
             this.RedirectUrl = "/Screens/screens";
-
-            Session.ForAll((s, sessionId) =>
-            {
-                s.CalculatePatchAndPushOnWebSocket();
-            });
-
         }
 
         public void Handle(Input.CloseTrigger action)
@@ -96,15 +46,17 @@ namespace Screens.ViewModels
             MessageBoxButton deleteButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Yes, Text = "Delete", CssClass = "btn btn-sm btn-danger" };
             MessageBoxButton cancelButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Cancel, Text = "Cancel" };
 
-            MessageBox.Show("Remove Screen", "This Screen will be removed.", cancelButton, deleteButton, (result) =>
+            MessageBox.Show("Delete Screen", "This Screen will be deleted.", cancelButton, deleteButton, (result) =>
             {
-
                 if (result == MessageBox.MessageBoxResult.Yes)
                 {
+                    // TODO: how to check that this.Data can be deleted (if it has not been commited?)
                     Db.Transact(() =>
                     {
                         this.Data.Delete();
                     });
+
+                    this.RedirectUrl = "/Screens/screens";  // TODO: This does not work!. (maybe of some commit-hooks activity?)
                 }
             });
         }
@@ -114,7 +66,7 @@ namespace Screens.ViewModels
             int min = 1000;
             int max = 9999;
             Random rnd = new Random();
-            return rnd.Next(min, max).ToString().PadLeft(4,'0');
+            return rnd.Next(min, max).ToString().PadLeft(4, '0');
         }
     }
 
@@ -124,11 +76,7 @@ namespace Screens.ViewModels
 
         public void Handle(Input.DeleteTrigger action)
         {
-
-            Db.Transact(() =>
-            {
-                this.Data.Delete();
-            });
+            Db.Transact(() => this.Data.Delete());
         }
     }
 
