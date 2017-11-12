@@ -2,6 +2,9 @@
   "short_name": "Screens",
   "name": "Connecting Screens",
   "display": "fullscreen",
+  "orientation": "landscape",
+  "theme_color": "#44A40D",
+  "background_color": "#44A40D",
   "icons": [
     {
       "src": "/screens.png",

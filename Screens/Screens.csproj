@@ -121,6 +121,7 @@
     <TypedJSON Include="ViewModels\MenuItem.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <None Include="wwwroot\manifest.json" />
     <None Include="wwwroot\Screens\Main.html" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Screens\MenuItem.html" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\screens.png" />
+    <Content Include="wwwroot\screens.svg" />
     <Content Include="wwwroot\Screens\ScreenContent.html" />
     <None Include="wwwroot\Screens\SignInPage.html" />
     <None Include="wwwroot\Screens\Screen.html" />
