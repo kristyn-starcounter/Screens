@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Specialized;
 using Screens.Common;
 using Screens.ViewModels;
+using System.Reflection;
 
 namespace Screens
 {
@@ -18,41 +19,52 @@ namespace Screens
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
+            //#region Hack to get default template and insert custom tag in <head> section
+            //string relative_wwwroot_path_to_manifest = "/screens/manifest.json";
+            //PartialToStandaloneHtmlProvider p = new PartialToStandaloneHtmlProvider();
+            //FieldInfo field = typeof(PartialToStandaloneHtmlProvider).GetField("template", BindingFlags.NonPublic | BindingFlags.Instance);
+            //string htmlTemplate = field.GetValue(p) as string;
+            //int headPos = htmlTemplate.IndexOf("<head>");
+            //if (headPos != -1)
+            //{
+            //    // Insert
+            //    string linkManifest = string.Format(Environment.NewLine + "<link rel = \"manifest\" href = \"{0}\">" + Environment.NewLine, relative_wwwroot_path_to_manifest);
+            //    htmlTemplate = htmlTemplate.Insert(headPos + 6, linkManifest);
+            //}
+            //Application.Current.Use(new PartialToStandaloneHtmlProvider(htmlTemplate));
+            //#endregion
+
+
             Screens.Common.Utils.RegisterHooks();
 
             Handle.GET("/Screens/reset", (Request request) =>
             {
                 MainPage mainPage = GetMainPage();
                 mainPage.Cookie = null;
-                mainPage.RedirectUrl = "/Screens?setcookie=";
-                return mainPage;
+
+                Response respone = new Response();
+                respone.Headers["Set-Cookie"] = "screenid=" + "" + ";Path=/;Expires=Wed, 21 Oct 2015 07:28:00 GMTT"; // TODO: Come up with a more clever way to set a cookie with no expire date
+                respone.Headers["Location"] = "/Screens";
+                respone.StatusCode = (ushort)System.Net.HttpStatusCode.TemporaryRedirect;
+                return respone;
             });
 
             #region App Root
             Handle.GET("/Screens?{?}", (string query, Request request) =>
             {
                 NameValueCollection collection = System.Web.HttpUtility.ParseQueryString(query);
-
                 string guid = collection["setcookie"];
 
-                //Handle.AddOutgoingCookie("screenid", guid);   // This only set a "session" cookie
-
-                MainPage mainPage = GetMainPage();
-                mainPage.RedirectUrl = "/Screens";
                 Response respone = new Response();
-                respone.Resource = mainPage;
-                respone.Headers["Set-Cookie"] = "screenid=" + guid + "; Expires = Wed, 2 Dec 2037 00:00:00 GMT;"; // TODO: Come up with a more clever way to set a cookie with no expire date
-                //respone.Headers["Location"] = "/Screens";
-                //respone.StatusCode = (ushort)System.Net.HttpStatusCode.MovedPermanently;
+                respone.Headers["Set-Cookie"] = "screenid=" + guid + ";Path=/;Expires=Wed, 2 Dec 2037 00:00:00 GMT"; // TODO: Come up with a more clever way to set a cookie with no expire date
+                respone.Headers["Location"] = "/Screens";
+                respone.StatusCode = (ushort)System.Net.HttpStatusCode.SeeOther;
                 return respone;
-
             });
 
             Handle.GET("/Screens", (Request request) =>
             {
-                IncommingRequest(request);
-
-                MainPage mainPage = GetMainPage();
+                MainPage mainPage = GetMainPage(request);
 
                 if (mainPage.Cookie != null)
                 {
@@ -67,6 +79,11 @@ namespace Screens
                         mainPage.Content = screenContentPage;
                         return mainPage;
                     }
+                    else
+                    {
+                        //Invalid cookie
+                        // TODO: Clear invalid browser cookie
+                    }
                 }
                 else
                 {
@@ -80,9 +97,8 @@ namespace Screens
 
             Handle.GET("/Screens/signin", (Request request) =>
             {
-                IncommingRequest(request);
 
-                MainPage mainPage = GetMainPage();
+                MainPage mainPage = GetMainPage(request);
                 mainPage.Content = new SignInPage();
                 return mainPage;
             });
@@ -93,9 +109,8 @@ namespace Screens
 
             Handle.GET("/Screens/screens", (Request request) =>
             {
-                IncommingRequest(request);
 
-                MainPage mainPage = GetMainPage();
+                MainPage mainPage = GetMainPage(request);
                 User user = UserSession.GetSignedInUser();
                 if (user != null)
                 {
@@ -111,9 +126,8 @@ namespace Screens
 
             Handle.GET("/Screens/screens/{?}", (string id, Request request) =>
             {
-                IncommingRequest(request);
 
-                MainPage mainPage = GetMainPage();
+                MainPage mainPage = GetMainPage(request);
                 User user = UserSession.GetSignedInUser();
 
                 if (user == null)
@@ -144,9 +158,8 @@ namespace Screens
 
             Handle.GET("/Screens/addscreen", (Request request) =>
             {
-                IncommingRequest(request);
 
-                MainPage mainPage = GetMainPage();
+                MainPage mainPage = GetMainPage(request);
 
                 User user = UserSession.GetSignedInUser();
                 if (user == null)
@@ -172,60 +185,18 @@ namespace Screens
 
             #endregion
 
+            #region Blending
 
-            #region MenuItems
-
-            Handle.GET("/Screens/menuitem/{?}", (string screenId) =>
-            {
-
-                MenuItem menuItem = new MenuItem();
-                menuItem.Name = "Screen";
-
-
-                return menuItem;
-            });
-
-            Blender.MapUri("/Screens/menuitem/{?}", "menuitem");
-
-
-            #endregion
-
-            #region Mapping
-
-            Handle.GET("/Screens/screenContent/{?}", (string screenId) =>
-            {
-                return new Json();
-            });
-
+            Handle.GET("/Screens/screenContent/{?}", (string screenId) => { return new Json(); });
             Blender.MapUri("/Screens/screenContent/{?}", "screenContent");
 
-
-            Handle.GET("/Screens/screenpluginmapping/{?}", (string screenId) =>
-            {
-                return new Json();
-            });
-
+            Handle.GET("/Screens/screenpluginmapping/{?}", (string screenId) => { return new Json(); });
             Blender.MapUri("/Screens/screenpluginmapping/{?}", "screen");
 
             #endregion
-
-
-
         }
 
-        private static void IncommingRequest(Request request)
-        {
-            // Get and Set Cookie
 
-            Cookie screenCookie = GetCookie(request, "screenid");
-
-            if (screenCookie != null && !string.IsNullOrEmpty(screenCookie.Value))
-            {
-                GetMainPage().Cookie = screenCookie;
-
-            }
-
-        }
 
         private static Cookie GetCookie(Request request, string name)
         {
@@ -233,16 +204,25 @@ namespace Screens
         }
 
 
-        public static MainPage GetMainPage()
+        public static MainPage GetMainPage(Request request = null)
         {
             var session = Session.Ensure();
 
             MainPage mainPage = session.Store[nameof(MainPage)] as MainPage;
-
             if (mainPage == null)
             {
                 mainPage = new MainPage();
                 session.Store[nameof(MainPage)] = mainPage;
+            }
+
+            // Set the cookie from request on the mainPage if any
+            if (request != null)
+            {
+                Cookie screenCookie = GetCookie(request, "screenid");
+                if (screenCookie != null && !string.IsNullOrEmpty(screenCookie.Value))
+                {
+                    mainPage.Cookie = screenCookie;
+                }
             }
 
             return mainPage;
