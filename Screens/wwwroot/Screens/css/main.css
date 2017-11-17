@@ -5,13 +5,25 @@
 }
 
 .mainHeader {
-    flex: 1 auto;
+    flex: 0 0 auto;
     background: #0252A2;
     padding: 10px;
 }
 
+.mainHeader ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .mainHeader ul li {
+        display: inline-block;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
 .mainContent {
-    flex: 1 100%;
+    flex: 1 1 100%;
 }
 
 body {

@@ -9,20 +9,17 @@
             <div class="container">
                 <h1 class="display-3">Welcome!!</h1>
                 <p class="lead">Connecting Screens</p>
-                <hr class="my-4">
-                <p>Use a screen code to connect this screen.</p>
+                <smal>Use a screen code to connect this screen.</smal>
 
-
-                <div class="form-group">
-                    <!--<label for="description">Screencode</label>-->
-                    <input type="text" class="form-control" id="description" value="{{model.ScreenCode$::input}}" placeholder="Enter Screencode">
-                </div>
-
-                <button type="button" value="{{model.ConnectScreenTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">Connect Screen</button>
-                <template is="dom-if" if="{{model.Message}}">
-                    <p class="text-danger">{{model.Message}}</p>
-                </template>
-
+                <form>
+                    <template is="dom-if" if="{{model.Message}}">
+                        <p class="text-danger">{{model.Message}}</p>
+                    </template>
+                    <div class="form-group">
+                        <input type="number" min="0" max="9999" maxlength="4" class="form-control" id="description" value="{{model.ScreenCode$::input}}" placeholder="Enter Screencode">
+                    </div>
+                    <button type="submit" value="{{model.ConnectScreenTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">Connect Screen</button>
+                </form>
             </div>
         </div>
 

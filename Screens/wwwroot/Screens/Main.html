@@ -1,14 +1,10 @@
 ﻿
 <link rel="import" href="/sys/polymer/polymer.html">
 <link rel="stylesheet" href="/screens/css/main.css" />
-<link rel="import" href="/sys/google-signin/google-signin.html" />
-<link rel="import" href="/sys/google-signin/google-signin-aware.html" />
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html">
 
 
 <template>
-
-
 
     <template is="dom-bind">
 
@@ -26,80 +22,27 @@
 
             <template is="dom-if" if="{{!model.HideMenu}}">
                 <div class="mainHeader">
-                    <a style="margin:10px" href="/Screens">Home</a>
-                    <a style="margin:10px" href="/Screens/screens">Screens</a>
-                    <a style="margin:10px" href="/RoomBooking/rooms">Rooms</a>
-
-                    <google-signin-aware on-google-signin-aware-success="handleSignin"
-                                         on-google-signin-aware-signed-out="handleSignOut"
-                                         on-google-signin-offline-success="handleOffline"></google-signin-aware>
-
-                    <div class="pull-right">
-                        <span style="color:white">{{ model.User.Email }}</span>
-                        <google-signin width="wide" height="short" brand="google" signed-in="{{signedIn}}" client-id="525016583199-77s56n08s4uuoir2oppc8gs1biv5t6q9.apps.googleusercontent.com"></google-signin>
-                    </div>
+                    <ul>
+                        <starcounter-include style="height:100%" partial="{{model.Menu}}"></starcounter-include>
+                    </ul>
                 </div>
+
             </template>
 
+
+
             <div class="mainContent">
-
-                <!--<starcounter-include style="height:100%" partial="{{model.Content}}"></starcounter-include>-->
-
                 <template is="imported-template" model="{{model.Content}}" content$="{{model.Content.Html}}">
                 </template>
             </div>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl}}" />
-        <!-- history maked the /screen be called twice -->
-        <!--<link is="puppet-redirect" history url$="{{model.RedirectUrl}}" />-->
     </template>
 
 
     <script>
-
-
-        (function () {
-            var script = document._currentScript || document.currentScript;
-            var template = script.previousElementSibling;
-
-            //debugger;
-            template.handleSignin = function (response) {
-                //                debugger;
-                var googleUser = gapi.auth2.getAuthInstance()['currentUser'].get();
-                var profile = googleUser.getBasicProfile();
-
-                // TODO: Do not use getId() !!!
-                this.model.GoogleUser.Id$ = profile.getId();
-                this.model.GoogleUser.Email$ = profile.getEmail();
-                this.model.GoogleUser.FirstName$ = profile.getGivenName();
-                this.model.GoogleUser.LastName$ = profile.getFamilyName();
-                this.model.GoogleUser.SignedIn$ = googleUser.isSignedIn();
-                // TODO: https://developers.google.com/identity/sign-in/web/backend-auth
-                //                var id_token = googleUser.getAuthResponse().id_token;
-            };
-            template.handleSignOut = function (response) {
-                var googleUser = gapi.auth2.getAuthInstance()['currentUser'].get();
-                this.model.GoogleUser.Id$ = "";
-                this.model.GoogleUser.Email$ = "";
-                this.model.GoogleUser.FirstName$ = "";
-                this.model.GoogleUser.LastName$ = "";
-                this.model.GoogleUser.SignedIn$ = googleUser.isSignedIn();
-            };
-            template.handleOffline = function (response) {
-                //    console.log('Offline code received: ' + response.detail.code);
-                //    // Here you would POST response.detail.code to your webserver, which can
-                //    // exchange the authorization code for an access token. More info at:
-                //    // https://developers.google.com/identity/protocols/OAuth2WebServer
-                var googleUser = gapi.auth2.getAuthInstance()['currentUser'].get();
-                this.model.GoogleUser.Id$ = "";
-                this.model.GoogleUser.Email$ = "";
-                this.model.GoogleUser.FirstName$ = "";
-                this.model.GoogleUser.LastName$ = "";
-                this.model.GoogleUser.SignedIn$ = googleUser.isSignedIn();
-            };
-        })();
-
+    
         var head = document.getElementsByTagName('head')[0];
         var manifestLink = document.createElement('link');
         manifestLink.rel = "manifest";

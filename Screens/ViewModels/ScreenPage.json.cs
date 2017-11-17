@@ -1,7 +1,6 @@
 using Starcounter;
 using System;
 using System.Collections.Generic;
-using Screens.Common;
 
 namespace Screens.ViewModels
 {
@@ -12,7 +11,7 @@ namespace Screens.ViewModels
             this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data.GetObjectID());
         }
 
-        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>("SELECT o FROM Screens.Common.ScreenTempCode o WHERE o.Screen = ? ORDER BY o.Expires", this.Data);
+        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>($"SELECT o FROM {typeof(ScreenTempCode)} o WHERE o.{nameof(ScreenTempCode.Screen)} = ? ORDER BY o.{nameof(ScreenTempCode.Expires)}", this.Data);
         
         public string UrlString => string.Format("/Screens/screens/{0}", this.Data?.GetObjectID());
     
