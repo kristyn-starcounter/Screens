@@ -20,7 +20,6 @@ namespace Screens
                     user = new User() { FirstName = "Anonymouse", LastName = "Anonymouse" };
                 });
             }
-
             return user;
         }
 

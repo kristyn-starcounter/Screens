@@ -89,8 +89,6 @@ namespace Screens
                 mainPage.Content = welcomePage;
                 return mainPage;
             });
-
-
         }
 
         private static void RegisterBlending()
@@ -101,16 +99,14 @@ namespace Screens
             Handle.GET("/Screens/screenpluginmapping/{?}", (string screenId) => { return new Json(); });
             Blender.MapUri("/Screens/screenpluginmapping/{?}", "screen");
 
-
             Handle.GET("/Screens/menumapping", () =>
             {
-
                 Menu menu = new Menu();
                 menu.Init();
                 return menu;
             });
-            Blender.MapUri("/Screens/menumapping", "menu");
 
+            Blender.MapUri("/Screens/menumapping", "menu");
         }
     }
 }

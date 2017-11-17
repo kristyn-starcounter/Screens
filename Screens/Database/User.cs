@@ -14,7 +14,6 @@ namespace Screens
             Hook<User>.BeforeDelete += (sender, user) =>
             {
                 Db.SQL($"DELETE FROM {typeof(UserScreenRelation)} WHERE {nameof(UserScreenRelation.User)} = ?", user);
-
             };
         }
     }

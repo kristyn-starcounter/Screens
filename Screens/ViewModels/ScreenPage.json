@@ -1,17 +1,11 @@
 {
   "Html": "/Screens/screen.html",
   "RedirectUrl": "",
-  "Name$": "",
-  "Description$": "",
+  "Screen": {
+    "Name$": "",
+    "Description$": ""
+  },
   "PluginsContent": {},
-  "TimeZones": [
-    {
-      "Id": "",
-      "DisplayName": ""
-    }
-  ],
-  "SelectedTimeZoneId$": "",
-  "DaylightSavings$": false,
   "ScreenCodes": [
     {
       "Code": "",
@@ -23,5 +17,4 @@
   "DeleteTrigger$": 0,
   "SaveTrigger$": 0,
   "CloseTrigger$": 0
-
 }

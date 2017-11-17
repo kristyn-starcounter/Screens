@@ -4,31 +4,31 @@ using System.Collections.Generic;
 
 namespace Screens.ViewModels
 {
-    partial class ScreenPage : Json, IBound<Screen>
+    partial class ScreenPage : Json, IBound<UserScreenRelation>
     {
         public void Init()
         {
-            this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data.GetObjectID());
+            this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data?.Screen?.GetObjectID());
         }
 
-        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>($"SELECT o FROM {typeof(ScreenTempCode)} o WHERE o.{nameof(ScreenTempCode.Screen)} = ? ORDER BY o.{nameof(ScreenTempCode.Expires)}", this.Data);
-        
-        public string UrlString => string.Format("/Screens/screens/{0}", this.Data?.GetObjectID());
-    
+
+        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>($"SELECT o FROM {typeof(ScreenTempCode)} o WHERE o.{nameof(ScreenTempCode.Screen)} = ? ORDER BY o.{nameof(ScreenTempCode.Expires)}", this.Data?.Screen);
+
+
         public void Handle(Input.GenerateScreenCodeTrigger action)
         {
-            Db.Transact(() =>
-            {
-                ScreenTempCode screenCode = new ScreenTempCode();
-                screenCode.Code = GenerateRandomScreenCode();
-                screenCode.Screen = this.Data;
-                screenCode.Expires = DateTime.UtcNow.AddHours(1); // TODO: Expire time 1 hour?
-            });
+            ScreenTempCode screenCode = new ScreenTempCode();
+            screenCode.Code = GenerateRandomScreenCode();
+            screenCode.Screen = this.Data?.Screen;
+            screenCode.Expires = DateTime.UtcNow.AddHours(1); // TODO: Expire time 1 hour?
         }
 
         public void Handle(Input.SaveTrigger action)
         {
-            this.Transaction.Commit();
+            if (this.Transaction.IsDirty)
+            {
+                this.Transaction.Commit();
+            }
             this.RedirectUrl = "/Screens/screens";
         }
 
@@ -38,10 +38,8 @@ namespace Screens.ViewModels
             this.RedirectUrl = "/Screens/screens";
         }
 
-
         public void Handle(Input.DeleteTrigger action)
         {
-
             MessageBoxButton deleteButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Yes, Text = "Delete", CssClass = "btn btn-sm btn-danger" };
             MessageBoxButton cancelButton = new MessageBoxButton() { ID = (long)MessageBox.MessageBoxResult.Cancel, Text = "Cancel" };
 
@@ -49,11 +47,14 @@ namespace Screens.ViewModels
             {
                 if (result == MessageBox.MessageBoxResult.Yes)
                 {
+
                     // TODO: how to check that this.Data can be deleted (if it has not been commited?)
-                    Db.Transact(() =>
+                    this.Data.Delete();
+                    if (this.Transaction.IsDirty)
                     {
-                        this.Data.Delete();
-                    });
+                        this.Transaction.Commit();
+                    }
+
 
                     this.RedirectUrl = "/Screens/screens";  // TODO: This does not work!. (maybe of some commit-hooks activity?)
                 }
@@ -75,7 +76,7 @@ namespace Screens.ViewModels
 
         public void Handle(Input.DeleteTrigger action)
         {
-            Db.Transact(() => this.Data.Delete());
+            Db.Transact(() => this.Data?.Delete());
         }
     }
 
