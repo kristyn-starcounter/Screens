@@ -25,16 +25,16 @@ namespace Screens.ViewModels
 
         public void Handle(Input.SaveTrigger action)
         {
-            if (this.Transaction.IsDirty)
-            {
-                this.Transaction.Commit();
-            }
+            this.Transaction.Commit();
             this.RedirectUrl = "/Screens/screens";
         }
 
         public void Handle(Input.CloseTrigger action)
         {
-            this.Transaction.Rollback();
+            if (this.Transaction.IsDirty)
+            {
+                this.Transaction.Rollback();
+            }
             this.RedirectUrl = "/Screens/screens";
         }
 
@@ -55,7 +55,6 @@ namespace Screens.ViewModels
                         this.Transaction.Commit();
                     }
 
-
                     this.RedirectUrl = "/Screens/screens";  // TODO: This does not work!. (maybe of some commit-hooks activity?)
                 }
             });
@@ -73,7 +72,6 @@ namespace Screens.ViewModels
     [ScreenPage_json.ScreenCodes]
     partial class ScreenPageScreenTempoCode : Json, IBound<ScreenTempCode>
     {
-
         public void Handle(Input.DeleteTrigger action)
         {
             Db.Transact(() => this.Data?.Delete());

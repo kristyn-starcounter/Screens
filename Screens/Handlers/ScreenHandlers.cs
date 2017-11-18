@@ -39,7 +39,7 @@ namespace Screens
                     return mainPage;
                 }
 
-                UserScreenRelation userScreenRelation = Db.SQL<UserScreenRelation>($"SELECT o FROM {typeof(UserScreenRelation)} o WHERE o.{nameof(UserScreenRelation.Screen)} = ? AND o.{nameof(UserScreenRelation.User)} = ?", screen,user).FirstOrDefault();
+                UserScreenRelation userScreenRelation = Db.SQL<UserScreenRelation>($"SELECT o FROM {typeof(UserScreenRelation)} o WHERE o.{nameof(UserScreenRelation.Screen)} = ? AND o.{nameof(UserScreenRelation.User)} = ?", screen, user).FirstOrDefault();
                 if (userScreenRelation == null)
                 {
                     ErrorMessageBox.Show("User screen not found"); // TODO: Show page error instead of popup
@@ -70,17 +70,11 @@ namespace Screens
                     return mainPage;
                 }
 
-                mainPage.Content= Db.Scope<ScreenPage>(() =>
+                mainPage.Content = Db.Scope(() =>
                 {
-                    UserScreenRelation userScreenRelation = new UserScreenRelation
-                    {
-                        Screen = new Screen(),
-                        User = user
-                    };
-
                     ScreenPage screenPage = new ScreenPage
                     {
-                        Data = userScreenRelation
+                        Data = new UserScreenRelation { Screen = new Screen(), User = user }
                     };
 
                     screenPage.Init();
