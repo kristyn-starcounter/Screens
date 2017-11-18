@@ -1,32 +1,4 @@
-﻿.mainPage {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.mainHeader {
-    flex: 0 0 auto;
-    background: #0252A2;
-    padding: 10px;
-}
-
-.mainHeader ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-    .mainHeader ul li {
-        display: inline-block;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-
-.mainContent {
-    flex: 1 1 100%;
-}
-
-body {
+﻿body {
     height: 100%;
     padding: 0px;
     margin: 0px;
@@ -36,6 +8,35 @@ body {
 html {
     height: 100%;
 }
+
+.mainAppPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.appMenu {
+    flex: 0 0 auto;
+    background: #0252A2;
+    padding: 10px;
+}
+
+.appMenu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.appMenu ul li {
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.appContent {
+    flex: 1 1 auto;
+}
+
 
 .screenCodeItem {
     text-align: center;
@@ -47,6 +48,7 @@ html {
     padding: 20px;
     color: white;
 }
+
     .screenCodeItem h2 {
         color: white;
         margin: 0px;
@@ -59,19 +61,19 @@ html {
     border-radius: 0px;
     background-color: #ffffff;
     padding: 10px;
-    display:block;
+    display: block;
 }
 
 
 
-.screenItem h1 {
-    padding: 10px;
-}
+    .screenItem h1 {
+        padding: 10px;
+    }
 
 
-.screenItem:link {
-    text-decoration: none;
-}
+    .screenItem:link {
+        text-decoration: none;
+    }
 
 .formpanel {
     margin: 40px;
@@ -81,8 +83,8 @@ html {
 }
 
 
-.btn-sm  {
-    min-width:80px;
+.btn-sm {
+    min-width: 80px;
 }
 
 .pluginItems {

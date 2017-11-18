@@ -139,7 +139,7 @@
     <None Include="wwwroot\Screens\Screen.html" />
     <None Include="wwwroot\Screens\Screens.html" />
     <None Include="wwwroot\Screens\Welcome.html" />
-    <Content Include="wwwroot\Screens\css\main.css" />
+    <Content Include="wwwroot\Screens\css\mainapp.css" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

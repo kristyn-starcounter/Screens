@@ -1,10 +1,6 @@
 ﻿using Screens.ViewModels;
 using Starcounter;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Screens
 {
@@ -13,8 +9,6 @@ namespace Screens
 
         public static void Register()
         {
-
-            #region Screen
 
             Handle.GET("/Screens/screens", (Request request) =>
             {
@@ -30,7 +24,6 @@ namespace Screens
             Handle.GET("/Screens/screens/{?}", (string id, Request request) =>
             {
                 MainPage mainPage = Utils.GetMainPage(request);
-
                 User user = UserSession.GetSignedInUser();
                 if (user == null)
                 {
@@ -71,7 +64,6 @@ namespace Screens
             Handle.GET("/Screens/addscreen", (Request request) =>
             {
                 MainPage mainPage = Utils.GetMainPage(request);
-
                 User user = UserSession.GetSignedInUser();
                 if (user == null)
                 {
@@ -98,8 +90,6 @@ namespace Screens
 
                 return mainPage;
             });
-
-            #endregion
         }
     }
 }

@@ -1,45 +1,39 @@
-﻿
-<link rel="import" href="/sys/polymer/polymer.html">
-<link rel="stylesheet" href="/screens/css/main.css" />
-<link rel="import" href="/sys/puppet-redirect/puppet-redirect.html">
-
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/palindrom-redirect/palindrom-redirect.html">
+<link rel="stylesheet" href="/screens/css/mainapp.css" />
 
 <template>
 
     <template is="dom-bind">
 
-
-        <div class="mainPage">
+        <div class="mainAppPage">
 
             <div>
                 <!-- Error MessageBox -->
-                <template is="imported-template" model="{{model.ErrorMessage}}" content$="{{model.ErrorMessage.Html}}">
+                <template is="imported-template" model="{{model.ErrorMessage}}" href="{{model.ErrorMessage.Html}}">
                 </template>
                 <!-- MessageBox -->
-                <template is="imported-template" model="{{model.MessageBox}}" content$="{{model.MessageBox.Html}}">
+                <template is="imported-template" model="{{model.MessageBox}}" href="{{model.MessageBox.Html}}">
                 </template>
             </div>
 
             <template is="dom-if" if="{{!model.HideMenu}}">
-                <div class="mainHeader">
+                <div class="appMenu">
                     <ul>
                         <starcounter-include style="height:100%" partial="{{model.Menu}}"></starcounter-include>
                     </ul>
                 </div>
-
             </template>
 
 
-
-            <div class="mainContent">
-                <template is="imported-template" model="{{model.Content}}" content$="{{model.Content.Html}}">
+            <div class="appContent">
+                <template is="imported-template" model="{{model.Content}}" href="{{model.Content.Html}}">
                 </template>
             </div>
         </div>
 
-        <link is="puppet-redirect" history url$="{{model.RedirectUrl}}" />
+        <link is="palindrom-redirect" history url$="{{model.RedirectUrl}}" />
     </template>
-
 
     <script>
     
@@ -49,7 +43,25 @@
         manifestLink.href = "/screens/manifest.json";
         head.appendChild(manifestLink);
 
+        //var iosFullScreen = document.createElement('meta');
+        //iosFullScreen.name = "apple-mobile-web-app-capable";
+        //iosFullScreen.content = "yes";
+        //head.appendChild(iosFullScreen);
 
+        //var iosIcon = document.createElement('link');
+        //iosIcon.rel = "apple-touch-icon";
+        //iosIcon.href = "/screens/screens.png";
+        //head.appendChild(iosIcon);
+
+        //var iosStatusBar = document.createElement('meta');
+        //iosStatusBar.name = "apple-mobile-web-app-status-bar-style";
+        //iosStatusBar.content = "black-translucent";
+        //head.appendChild(iosStatusBar);
+
+        //<meta name="apple-mobile-web-app-capable" content="yes">
+        //<link rel="apple-touch-icon" href="screens.png">
+        //<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        
     </script>
 
 </template>
