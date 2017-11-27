@@ -6,6 +6,20 @@ namespace Screens.ViewModels
 {
     partial class ScreenPage : Json, IBound<UserScreenRelation>
     {
+
+        protected override void OnData()
+        {
+            // This "workaround" is needed see github issue
+            // https://github.com/Starcounter/Home/issues/316
+
+            if (this.Data == null && !string.IsNullOrEmpty(this.RedirectUrl))
+            {
+                this.RedirectUrl = this.RedirectUrl;
+            }
+            base.OnData();
+        }
+
+
         public void Init()
         {
             this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data?.Screen?.GetObjectID());
