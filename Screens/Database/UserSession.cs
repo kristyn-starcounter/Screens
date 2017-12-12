@@ -17,7 +17,7 @@ namespace Screens
             {
                 Db.Transact(() =>
                 {
-                    user = new User() { FirstName = "Anonymouse", LastName = "Anonymouse" };
+                    user = new User() { FirstName = "Anonymous", LastName = "Anonymous" };
                 });
             }
             return user;
