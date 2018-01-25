@@ -1,25 +1,24 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 
 <template>
-    <template is="dom-bind">
-        <div style="margin:40px">
-
-            <div>
-                <p>Screens</p>
+    <dom-bind>
+        <template is="dom-bind">
+            <div style="margin:40px">
+                <div>
+                    <p>Screens</p>
+                </div>
+                <template is="dom-repeat" items="{{model.Screens}}">
+                    <a class="screenItem" href="{{item.Url}}">
+                        <h5>
+                            {{item.Name}}
+                            <small class="text-muted">{{item.Description}}</small>
+                        </h5>
+                    </a>
+                </template>
+                <div style="margin-top:20px">
+                    <a href="/Screens/addscreen">Add Screen</a>
+                </div>
             </div>
-
-            <template is="dom-repeat" items="{{model.Screens}}">
-                <a class="screenItem" href="{{item.Url}}">
-                    <h5>
-                        {{item.Name}}
-                        <small class="text-muted">{{item.Description}}</small>
-                    </h5>
-                </a>
-            </template>
-
-            <div style="margin-top:20px">
-                <a href="/Screens/addscreen">Add Screen</a>
-            </div>
-        </div>
-    </template>
+        </template>
+    </dom-bind>
 </template>

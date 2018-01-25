@@ -1,29 +1,28 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <link rel="import" href="/sys/palindrom-redirect/palindrom-redirect.html">
-
 <template>
+    <dom-bind>
+        <template is="dom-bind">
 
-    <template is="dom-bind">
-
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-3">Welcome!!</h1>
-                <p class="lead">Connecting Screens</p>
-                <smal>Use a screen code to connect this screen.</smal>
-
-                <form>
-                    <template is="dom-if" if="{{model.Message}}">
-                        <p class="text-danger">{{model.Message}}</p>
-                    </template>
-                    <div class="form-group">
-                        <input type="number" min="0" max="9999" maxlength="4" class="form-control" id="description" value="{{model.ScreenCode$::input}}" placeholder="Enter Screencode">
-                    </div>
-                    <button type="submit" value="{{model.ConnectScreenTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">Connect Screen</button>
-                </form>
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-3">Welcome!!</h1>
+                    <p class="lead">Connecting Screens</p>
+                    <smal>Use a screen code to connect this screen.</smal>
+                    <form>
+                        <template is="dom-if" if="{{model.Message}}">
+                            <p class="text-danger">{{model.Message}}</p>
+                        </template>
+                        <div class="form-group">
+                            <input type="number" min="0" max="9999" maxlength="4" class="form-control" id="description" value="{{model.ScreenCode$::input}}" placeholder="Enter Screencode">
+                        </div>
+                        <button type="submit" value="{{model.ConnectScreenTrigger$::click}}" class="btn btn-sm btn-primary" onclick="++this.value">Connect Screen</button>
+                    </form>
+                </div>
             </div>
-        </div>
+				<palindrom-redirect url="[[model.RedirectUrl]]"></palindrom-redirect>
 
-        <link is="palindrom-redirect" url$="{{model.RedirectUrl}}" />
-
-    </template>
+<!--            <link is="palindrom-redirect" url$="{{model.RedirectUrl}}"> -->
+        </template>
+    </dom-bind>
 </template>
