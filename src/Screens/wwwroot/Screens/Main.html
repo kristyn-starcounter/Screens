@@ -3,38 +3,32 @@
 <link rel="stylesheet" href="/screens/css/mainapp.css" />
 
 <template>
-
-    <template is="dom-bind">
-
-        <div class="mainAppPage">
-
-            <div>
-                <!-- Error MessageBox -->
-                <template is="imported-template" model="{{model.ErrorMessage}}" href="{{model.ErrorMessage.Html}}">
-                </template>
-                <!-- MessageBox -->
-                <template is="imported-template" model="{{model.MessageBox}}" href="{{model.MessageBox.Html}}">
-                </template>
-            </div>
-
-            <template is="dom-if" if="{{!model.HideMenu}}">
-                <div class="appMenu">
-                    <ul>
-                        <starcounter-include style="height:100%" partial="{{model.Menu}}"></starcounter-include>
-                    </ul>
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="mainAppPage">
+                <div>
+                    <!-- Error MessageBox -->
+                    <starcounter-include view-model="{{model.ErrorMessage}}"></starcounter-include>
+                    <!-- MessageBox -->
+                    <starcounter-include view-model="{{model.MessageBox}}"></starcounter-include>
                 </div>
-            </template>
 
-
-            <div class="appContent">
-                <template is="imported-template" model="{{model.Content}}" href="{{model.Content.Html}}">
+                <template is="dom-if" if="{{!model.HideMenu}}">
+                    <div class="appMenu">
+                        <ul>
+                            <starcounter-include style="height:100%" view-model="{{model.Menu}}"></starcounter-include>
+                        </ul>
+                    </div>
                 </template>
+
+                <div class="appContent">
+                    <starcounter-include view-model="{{model.Content}}"></starcounter-include>
+                </div>
             </div>
-        </div>
 
-        <link is="palindrom-redirect" history url$="{{model.RedirectUrl}}" />
-    </template>
-
+            <palindrom-redirect is="palindrom-redirect" history url="{{model.MorphUrl$}}"></palindrom-redirect>
+        </template>
+    </dom-bind>
     <script>
 
         var head = document.getElementsByTagName('head')[0];
@@ -43,24 +37,24 @@
         manifestLink.href = "/screens/manifest.json";
         head.appendChild(manifestLink);
 
-        //var iosFullScreen = document.createElement('meta');
-        //iosFullScreen.name = "apple-mobile-web-app-capable";
-        //iosFullScreen.content = "yes";
-        //head.appendChild(iosFullScreen);
+                    //var iosFullScreen = document.createElement('meta');
+                    //iosFullScreen.name = "apple-mobile-web-app-capable";
+                    //iosFullScreen.content = "yes";
+                    //head.appendChild(iosFullScreen);
 
-        //var iosIcon = document.createElement('link');
-        //iosIcon.rel = "apple-touch-icon";
-        //iosIcon.href = "/screens/screens.png";
-        //head.appendChild(iosIcon);
+                    //var iosIcon = document.createElement('link');
+                    //iosIcon.rel = "apple-touch-icon";
+                    //iosIcon.href = "/screens/screens.png";
+                    //head.appendChild(iosIcon);
 
-        //var iosStatusBar = document.createElement('meta');
-        //iosStatusBar.name = "apple-mobile-web-app-status-bar-style";
-        //iosStatusBar.content = "black-translucent";
-        //head.appendChild(iosStatusBar);
+                    //var iosStatusBar = document.createElement('meta');
+                    //iosStatusBar.name = "apple-mobile-web-app-status-bar-style";
+                    //iosStatusBar.content = "black-translucent";
+                    //head.appendChild(iosStatusBar);
 
-        //<meta name="apple-mobile-web-app-capable" content="yes">
-        //<link rel="apple-touch-icon" href="screens.png">
-        //<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+                    //<meta name="apple-mobile-web-app-capable" content="yes">
+                    //<link rel="apple-touch-icon" href="screens.png">
+                    //<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     </script>
 

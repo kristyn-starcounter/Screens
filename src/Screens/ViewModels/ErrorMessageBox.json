@@ -1,6 +1,6 @@
 {
   "Html": "/Screens/ErrorMessage.html",
-  "Visible": false,
+  "Visible$": false,
   "Title": "",
   "Text": "",
   "StackTrace": "",

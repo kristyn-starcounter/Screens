@@ -1,6 +1,6 @@
 {
   "Html": "/Screens/Welcome.html",
-  "RedirectUrl": "",
+  "MorphUrl$": "",
   "GoogleUser": {
     "SignedIn$": false,
     "Id$": "",

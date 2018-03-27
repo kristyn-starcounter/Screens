@@ -1,7 +1,9 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 
 <template>
-    <template is="dom-bind">
-        <starcounter-include style="height:100%" partial="{{model.Content}}"></starcounter-include>
-    </template>
+    <dom-bind>
+        <template is="dom-bind">
+            <starcounter-include style="height:100%" view-model="{{model.Content}}"></starcounter-include>
+        </template>
+    </dom-bind>
 </template>

@@ -12,9 +12,9 @@ namespace Screens.ViewModels
             // This "workaround" is needed see github issue
             // https://github.com/Starcounter/Home/issues/316
 
-            if (this.Data == null && !string.IsNullOrEmpty(this.RedirectUrl))
+            if (this.Data == null && !string.IsNullOrEmpty(this.MorphUrl))
             {
-                this.RedirectUrl = this.RedirectUrl;
+                this.MorphUrl = this.MorphUrl;
             }
             base.OnData();
         }
@@ -25,9 +25,8 @@ namespace Screens.ViewModels
             this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data?.Screen?.GetObjectID());
         }
 
-
-        public IEnumerable<ScreenTempCode> ScreenCodes => Db.SQL<ScreenTempCode>($"SELECT o FROM {typeof(ScreenTempCode)} o WHERE o.{nameof(ScreenTempCode.Screen)} = ? ORDER BY o.{nameof(ScreenTempCode.Expires)}", this.Data?.Screen);
-
+        public IEnumerable<ScreenTempCode> ScreenCodes => HelperFunctions.GetAllScreenTempCodes(this.Data?.Screen);
+       
 
         public void Handle(Input.GenerateScreenCodeTrigger action)
         {
@@ -40,7 +39,7 @@ namespace Screens.ViewModels
         public void Handle(Input.SaveTrigger action)
         {
             this.Transaction.Commit();
-            this.RedirectUrl = "/Screens/screens";
+            this.MorphUrl = "/Screens/screens";
         }
 
         public void Handle(Input.CloseTrigger action)
@@ -49,7 +48,7 @@ namespace Screens.ViewModels
             {
                 this.Transaction.Rollback();
             }
-            this.RedirectUrl = "/Screens/screens";
+            this.MorphUrl = "/Screens/screens";
         }
 
         public void Handle(Input.DeleteTrigger action)
@@ -69,7 +68,7 @@ namespace Screens.ViewModels
                         this.Transaction.Commit();
                     }
 
-                    this.RedirectUrl = "/Screens/screens";  // TODO: This does not work!. (maybe of some commit-hooks activity?)
+                    this.MorphUrl = "/Screens/screens";  // TODO: This does not work!. (maybe of some commit-hooks activity?)
                 }
             });
         }
@@ -88,6 +87,7 @@ namespace Screens.ViewModels
     {
         public void Handle(Input.DeleteTrigger action)
         {
+            //This also does not work if the screen hasn't been saved!
             Db.Transact(() => this.Data?.Delete());
         }
     }

@@ -44,7 +44,7 @@ namespace Screens.ViewModels
                 Db.SQL($"DELETE FROM {typeof(ScreenTempCode)} WHERE {nameof(ScreenTempCode.Code)} = ?", this.ScreenCode);
             });
 
-            this.RedirectUrl = "/Screens?setcookie=" + guid;
+            this.MorphUrl = "/Screens?setcookie=" + guid;
         }
 
     }
