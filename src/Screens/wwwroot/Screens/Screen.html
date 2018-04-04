@@ -22,6 +22,11 @@
                 </div>
 
                 <div class="form-group">
+                    <input type="text" class="form-control" id="description" value="{{model.Screen.ContentLocationUrl$::input}}" placeholder="Enter content location URL">
+                    <small class="form-text text-muted">URL to the location of the screen's content.</small>
+                </div>
+
+                <div class="form-group">
                     <template is="dom-repeat" items="{{model.ScreenCodes}}">
                         <div class="screenCodeItem">
                             <label>Screen code</label>

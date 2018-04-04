@@ -25,7 +25,7 @@ namespace Screens
                 mainPage = new MainPage();
 
                 // Menu blending point
-                mainPage.Menu = Self.GET("/Screens/menumapping");
+                mainPage.Menu = Self.GET("/Screens/menu");
 
                 session.Store[nameof(MainPage)] = mainPage;
             }
@@ -54,5 +54,29 @@ namespace Screens
             return request.Cookies.Select(x => new Cookie(x)).FirstOrDefault(x => x.Name == name);
         }
 
+        public static IEnumerable<ScreenTempCode> GetAllScreenTempCodes(Screen screen)
+        {
+            return Db.SQL<ScreenTempCode>($"SELECT o FROM {typeof(ScreenTempCode)} o WHERE o.{nameof(ScreenTempCode.Screen)} = ? ORDER BY o.{nameof(ScreenTempCode.Expires)}", screen);
+        }
+
+        public static Json GetScreenContent(Screen screen)
+        {
+            return GetScreenContent(screen?.ContentLocationUrl);           
+        }
+
+        public static Json GetScreenContent(string location)
+        {
+            Json resp = null;
+            if (location != null  &&  location != "")
+            {
+#pragma warning disable CS0618
+                Starcounter.Internal.StarcounterEnvironment.RunWithinApplication(null, () =>
+                {
+                    resp = Self.GET<Json>(location);
+                });
+#pragma warning restore CS0618
+            }
+            return resp;
+        }
     }
 }

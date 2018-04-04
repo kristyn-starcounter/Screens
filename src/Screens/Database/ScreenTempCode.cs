@@ -6,8 +6,8 @@ namespace Screens
     [Database]
     public class ScreenTempCode
     {
-        public string Code;
-        public DateTime Expires;
-        public Screen Screen;
+        public string Code { get; set; }
+        public DateTime Expires { get; set; }
+        public Screen Screen { get; set; }
     }
 }

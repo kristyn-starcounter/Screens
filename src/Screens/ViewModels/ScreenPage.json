@@ -3,7 +3,8 @@
   "MorphUrl$": "",
   "Screen": {
     "Name$": "",
-    "Description$": ""
+    "Description$": "",
+    "ContentLocationUrl$": ""
   },
   "PluginsContent": {},
   "ScreenCodes": [

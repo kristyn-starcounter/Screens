@@ -1,4 +1,5 @@
 ﻿using Starcounter;
+using System;
 using System.Linq;
 
 namespace Screens
@@ -6,8 +7,9 @@ namespace Screens
     [Database]
     public class UserSession
     {
-        public User User;
-        public string SessionId;
+        public User User { get; set; }
+        public string SessionId { get; set; }
+        public DateTime ExpiresAt { get; set; }
 
         public static User GetSignedInUser()
         {
@@ -17,7 +19,7 @@ namespace Screens
             {
                 Db.Transact(() =>
                 {
-                    user = new User() { FirstName = "Anonymous", LastName = "Anonymous" };
+                    user = new User() { Username = "Anonymous", Email = "" };
                 });
             }
             return user;

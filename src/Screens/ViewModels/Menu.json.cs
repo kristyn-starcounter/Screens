@@ -7,9 +7,6 @@ namespace Screens.ViewModels
 
         public void Init()
         {
-            //var item = this.Items.Add();
-            //item.Name = "Home";
-            //item.Url = "/Screens";
             var item2 = this.Items.Add();
             item2.Name = "Screens";
             item2.Url = "/Screens/Screens";

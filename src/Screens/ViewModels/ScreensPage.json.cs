@@ -11,7 +11,6 @@ namespace Screens.ViewModels
     [ScreensPage_json.Screens]
     partial class ScreensPageRoomItem : Json, IBound<Screen>
     {
-
         public string Url => string.Format("/Screens/screens/{0}", this.Data?.GetObjectID());
     }
 }

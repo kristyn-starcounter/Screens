@@ -22,10 +22,10 @@ namespace Screens.ViewModels
 
         public void Init()
         {
-            this.PluginsContent = Self.GET("/Screens/screenpluginmapping/" + this.Data?.Screen?.GetObjectID());
+            this.PluginsContent = Utils.GetScreenContent(this.Data?.Screen?.ContentLocationUrl);
         }
 
-        public IEnumerable<ScreenTempCode> ScreenCodes => HelperFunctions.GetAllScreenTempCodes(this.Data?.Screen);
+        public IEnumerable<ScreenTempCode> ScreenCodes => Utils.GetAllScreenTempCodes(this.Data?.Screen);
        
 
         public void Handle(Input.GenerateScreenCodeTrigger action)

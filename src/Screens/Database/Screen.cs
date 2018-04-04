@@ -6,10 +6,10 @@ namespace Screens
     [Database]
     public class Screen
     {
-        public string Name;
-        public string Description;
-        public string CookieValue;
-        public DateTime LastAccess;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string CookieValue { get; set; }
+        public DateTime LastAccess { get; set; }
 
         public static void RegisterHooks()
         {

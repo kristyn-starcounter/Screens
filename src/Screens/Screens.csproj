@@ -69,16 +69,12 @@
     <Compile Include="Database\User.cs" />
     <Compile Include="Database\UserScreenRelation.cs" />
     <Compile Include="Database\UserSession.cs" />
-    <Compile Include="Handlers\ScreenHandlers.cs" />
-    <Compile Include="Helpers\HelperFunctions.cs" />
+    <Compile Include="Handlers\MainHandlers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ViewModels\Menu.json.cs">
       <DependentUpon>Menu.json</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\ScreenContentPage.json.cs">
-      <DependentUpon>ScreenContentPage.json</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ScreenPage.json.cs">
       <DependentUpon>ScreenPage.json</DependentUpon>
@@ -118,9 +114,6 @@
     <TypedJSON Include="ViewModels\ScreenPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <TypedJSON Include="ViewModels\ScreenContentPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
     <TypedJSON Include="ViewModels\Menu.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
@@ -138,7 +131,6 @@
     <Content Include="wwwroot\screens.png" />
     <Content Include="wwwroot\screens.svg" />
     <None Include="wwwroot\Screens\Menu.html" />
-    <Content Include="wwwroot\Screens\ScreenContent.html" />
     <None Include="wwwroot\Screens\Screen.html" />
     <None Include="wwwroot\Screens\Screens.html" />
     <None Include="wwwroot\Screens\Welcome.html" />

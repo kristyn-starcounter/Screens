@@ -5,7 +5,7 @@ namespace Screens
     [Database]
     public class UserScreenRelation
     {
-        public User User;
-        public Screen Screen;
+        public User User { get; set; }
+        public Screen Screen { get; set; }
     }
 }

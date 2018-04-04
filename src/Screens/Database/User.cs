@@ -5,8 +5,8 @@ namespace Screens
     [Database]
     public class User
     {
-        public string FirstName;
-        public string LastName;
+        public string Username { get; set; }
+        public string Email { get; set; }
 
         public static void RegisterHooks()
         {
