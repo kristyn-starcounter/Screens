@@ -9,6 +9,7 @@ namespace Screens
         public string Name { get; set; }
         public string Description { get; set; }
         public string CookieValue { get; set; }
+        public string ContentLocationUrl { get; set; }
         public DateTime LastAccess { get; set; }
 
         public static void RegisterHooks()
