@@ -69,7 +69,6 @@
     <Compile Include="Database\User.cs" />
     <Compile Include="Database\UserScreenRelation.cs" />
     <Compile Include="Database\UserSession.cs" />
-    <Compile Include="Handlers\BlenderMapping.cs" />
     <Compile Include="Handlers\MainHandlers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +118,7 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="app.config" />
+    <None Include="blend.json" />
     <None Include="wwwroot\Screens\manifest.json" />
     <None Include="wwwroot\Screens\Main.html" />
   </ItemGroup>

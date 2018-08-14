@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Uri": "/Screens/screenpluginmapping/{?}",
+    "Token": "",
+    "Contexts": [
+      "screen"
+    ],
+    "AllowFromDirection": true,
+    "AllowToDirection": true
+  },
+  {
+    "Uri": "/Screens/menu",
+    "Token": "",
+    "Contexts": [
+      "menu"
+    ],
+    "AllowFromDirection": true,
+    "AllowToDirection": true
+  }
+]

@@ -21,9 +21,6 @@ namespace Screens
 
             // Handlers
             MainHandlers.Register();
-
-            // Blending
-            BlenderMapping.Register();
         }
     }
 }
